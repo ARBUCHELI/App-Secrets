@@ -54,9 +54,29 @@ app.get("/register", function(req, res){
 	res.render("register");
 })
 
+app.get("/secrets", function(req, res) {
+	/*Inside this callback is where we are going to check to see if the user is authenticated and this is where we're relying on 
+	passport, and sessin and passport-local and possport-local-mongoose, to make sure that if a user is already logged in, then 
+	we should simply render the secrets page, but if they're not logged in, then we're going to redirect them to the login page.*/
+	if (req.isAuthenticated()) {
+		res.render("secrets");
+	} else {
+		res.redirect("/login")
+	}
+});
+
 app.post("/register", function(req, res){
 
-	
+	User.register({username: req.body.username}, req.body.password, function(err, user) {
+		if (err) {
+			console.log(err);
+			res.redirect("/register"); //This will allow the user to try again.
+		} else {
+			passport.authenticate("local")(req, res, function() {
+				res.redirect("/secrets"); //Notice here that before we never had a secrets route
+			});
+		}
+	});
 });
     
 app.post("/login", function(req, res){
