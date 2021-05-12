@@ -56,7 +56,7 @@ app.get("/register", function(req, res){
 /*Here is when we create the secrets route*/
 app.get("/secrets", function(req, res) {
 	/*Inside this callback is where we are going to check to see if the user is authenticated and this is where we're relying on 
-	passport, and sessin and passport-local and possport-local-mongoose, to make sure that if a user is already logged in, then 
+	passport, and session and passport-local and passport-local-mongoose, to make sure that if a user is already logged in, then 
 	we should simply render the secrets page, but if they're not logged in, then we're going to redirect them to the login page.*/
 	if (req.isAuthenticated()) {
 		res.render("secrets");
