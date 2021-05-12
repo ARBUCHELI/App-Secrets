@@ -53,7 +53,7 @@ app.get("/login", function(req, res){
 app.get("/register", function(req, res){
 	res.render("register");
 })
-
+/*Here is when we create the secrets route*/
 app.get("/secrets", function(req, res) {
 	/*Inside this callback is where we are going to check to see if the user is authenticated and this is where we're relying on 
 	passport, and sessin and passport-local and possport-local-mongoose, to make sure that if a user is already logged in, then 
