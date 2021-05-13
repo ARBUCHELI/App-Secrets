@@ -42,7 +42,10 @@ userSchema.plugin(findOrCreate);
 const User = new mongoose.model("User", userSchema);
 
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
+passport.serializeUser(function(user, done) {
+	done(null, user.id);
+});
+
 passport.deserializeUser(User.deserializeUser());
 
 passport.use(new GoogleStrategy({
