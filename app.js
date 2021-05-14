@@ -132,6 +132,12 @@ app.get("/submit", function(req, res) {
 	}
 });
 
+app.post("/submit", function(req, res) {
+	const submittedSecret = req.body.secret;
+
+	console.log(req.user);
+});
+
 app.get("/logout", function(req, res) {
 
 	req.logout();
