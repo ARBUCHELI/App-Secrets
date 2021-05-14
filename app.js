@@ -75,20 +75,11 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    User.findOrCreate({facebookId: profile.id }, function(err, user) {
+    User.findOrCreate({ facebookId: profile.id }, function(err, user) {
       return cb(err, user);
     });
   }
 ));
-
-app.get("/auth/facebook", passport.authenticate("facebook") 
-  );
-
-app.get("/auth/facebook/secrets",
-    passport.authenticate("facebook", { failureRedirect: "/login" }),
-    function(req, res) {
-		res.redirect("/secrets");
-    });
 
 app.get("/", function(req, res){
 	res.render("home");
@@ -105,6 +96,15 @@ app.get("/auth/google/secrets",
     res.redirect('/secrets');
   });
 
+app.get("/auth/facebook", passport.authenticate("facebook") 
+  );
+
+app.get("/auth/facebook/secrets",
+    passport.authenticate("facebook", { failureRedirect: "/login" }),
+    function(req, res) {
+		res.redirect("/secrets");
+    });
+
 app.get("/login", function(req, res){
 	res.render("login");
 });
@@ -120,7 +120,15 @@ app.get("/secrets", function(req, res) {
 	if (req.isAuthenticated()) {
 		res.render("secrets");
 	} else {
-		res.redirect("/login")
+		res.redirect("/login");
+	}
+});
+
+app.get("/submit", function(req, res) {
+	if (req.isAuthenticated()) {
+		res.render("submit");
+	} else {
+		res.redirect("/login");
 	}
 });
 
