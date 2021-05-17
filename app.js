@@ -63,7 +63,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
   	console.log(profile);
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user){
       return cb(err, user);
     });
   }
@@ -76,7 +76,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    User.findOrCreate({ facebookId: profile.id }, function(err, user) {
+    User.findOrCreate({ facebookId: profile.id }, function(err, user){
       return cb(err, user);
     });
   }
@@ -115,7 +115,7 @@ app.get("/register", function(req, res){
 })
 /*Here is when we create the secrets route*/
 app.get("/secrets", function(req, res) {
-	User.find({"secret": {$ne: null}}, function(err, foundUsers) {
+	User.find({"secret": {$ne: null}}, function(err, foundUsers){
 		if (err) {
 			console.log(err);
 		} else {
@@ -139,7 +139,7 @@ app.post("/submit", function(req, res) {
 
 	console.log(req.user.id);
 
-	User.findById(req.user.id, function(err, foundUser) {
+	User.findById(req.user.id, function(err, foundUser){
 		if (err) {
 			console.log(err);
 		} else {
@@ -184,7 +184,7 @@ app.post("/login", function(req, res){
 		if (err) {
 			console.log(err);
 		} else {
-			passport.authenticate("local")(req, res, function() {
+			passport.authenticate("local")(req, res, function(){
 				res.redirect("/secrets");
 			});
 		}
